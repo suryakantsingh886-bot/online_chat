@@ -253,3 +253,12 @@ body {
     }
 
 }
+.message strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.message p {
+    margin: 0;
+}
