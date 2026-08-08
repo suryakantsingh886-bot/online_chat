@@ -1,34 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>My Chat</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="chat-container">
+    <!-- LOGIN / SIGNUP -->
+    <div class="auth-container" id="authContainer">
+
+        <h1>My Chat 💬</h1>
+
+        <input
+            type="email"
+            id="emailInput"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="passwordInput"
+            placeholder="Password"
+        >
+
+        <button id="loginButton">
+            Login
+        </button>
+
+        <button id="signupButton">
+            Create Account
+        </button>
+
+        <p id="authMessage"></p>
+
+    </div>
+
+
+    <!-- CHAT -->
+    <div class="chat-container" id="chatContainer">
 
         <div class="chat-header">
+
             <div>
                 <h2>My Chat</h2>
-                <span>Online</span>
+                <span id="userEmail">Online</span>
             </div>
+
+            <button id="logoutButton">
+                Logout
+            </button>
+
         </div>
+
 
         <div class="chat-messages" id="chatMessages">
-            <div class="message received">
-                <p>Hello! 👋</p>
-            </div>
 
-            <div class="message sent">
-                <p>Hi! 😄</p>
-            </div>
         </div>
 
+
         <div class="chat-input">
+
             <input
                 type="text"
                 id="messageInput"
@@ -36,12 +73,17 @@
                 autocomplete="off"
             >
 
-            <button id="sendButton">Send</button>
+            <button id="sendButton">
+                Send
+            </button>
+
         </div>
 
     </div>
 
+
     <script type="module" src="script.js"></script>
 
 </body>
+
 </html>
