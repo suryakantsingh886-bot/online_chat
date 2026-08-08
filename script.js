@@ -7,9 +7,11 @@ import {
     query,
     orderBy,
     onSnapshot,
-    serverTimestamp
+    serverTimestamp,
+    doc,
+    setDoc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -42,6 +44,7 @@ const authContainer = document.getElementById("authContainer");
 const chatContainer = document.getElementById("chatContainer");
 
 const emailInput = document.getElementById("emailInput");
+const usernameInput = document.getElementById("usernameInput");
 const passwordInput = document.getElementById("passwordInput");
 
 const loginButton = document.getElementById("loginButton");
@@ -64,33 +67,57 @@ const chatMessages = document.getElementById("chatMessages");
 signupButton.addEventListener("click", async () => {
 
     const email = emailInput.value.trim();
+    const username = usernameInput.value.trim();
     const password = passwordInput.value;
 
-    if (email === "" || password === "") {
+    if (email === "" || username === "" || password === "") {
 
-        authMessage.textContent = "Please enter email and password.";
+        authMessage.textContent =
+            "Please enter username, email and password.";
+
+        return;
+    }
+
+    if (username.length < 3) {
+
+        authMessage.textContent =
+            "Username must be at least 3 characters.";
 
         return;
     }
 
     try {
 
-        await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        const user = userCredential.user;
+
+        // Save user profile in Firestore
+
+        await setDoc(
+            doc(db, "users", user.uid),
+            {
+                username: username,
+                email: email
+            }
         );
 
-        authMessage.textContent = "Account created!";
+        authMessage.textContent =
+            "Account created!";
 
     } catch (error) {
 
-        authMessage.textContent = error.message;
+        authMessage.textContent =
+            error.message;
 
     }
 
 });
-
 
 // LOGIN
 
@@ -146,9 +173,43 @@ onAuthStateChanged(auth, (user) => {
 
         chatContainer.style.display = "flex";
 
-        userEmail.textContent = user.email;
+  loadUserProfile(user);
+// LOAD USER PROFILE
 
-        loadMessages();
+async function loadUserProfile(user) {
+
+    try {
+
+        const userDocument = await getDoc(
+            doc(db, "users", user.uid)
+        );
+
+        if (userDocument.exists()) {
+
+            const userData = userDocument.data();
+
+            userEmail.textContent =
+                userData.username;
+
+        } else {
+
+            userEmail.textContent =
+                user.email;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Error loading user profile:",
+            error
+        );
+
+        userEmail.textContent =
+            user.email;
+    }
+}
+loadMessages();
 
     } else {
 
@@ -206,12 +267,20 @@ function loadMessages() {
             }
 
 
-            const messageText = document.createElement("p");
+           const messageUsername = document.createElement("strong");
 
-            messageText.textContent = message.text;
+messageUsername.textContent =
+    message.senderUsername || "Unknown User";
 
 
-            messageDiv.appendChild(messageText);
+const messageText = document.createElement("p");
+
+messageText.textContent = message.text;
+
+
+messageDiv.appendChild(messageUsername);
+
+messageDiv.appendChild(messageText);
 
             chatMessages.appendChild(messageDiv);
 
@@ -258,8 +327,8 @@ async function sendMessage() {
 
                 senderId: user.uid,
 
-                senderEmail: user.email,
-
+               senderEmail: user.email,
+senderUsername: userEmail.textContent,
                 createdAt: serverTimestamp()
 
             }
