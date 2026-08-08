@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+            <div>
+                <h2>My Chat</h2>
+                <span>Online</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message received">
+                <p>Hello! 👋</p>
+            </div>
+
+            <div class="message sent">
+                <p>Hi! 😄</p>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Type a message..."
+                autocomplete="off"
+            >
+
+            <button id="sendButton">Send</button>
+        </div>
+
+    </div>
+
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
