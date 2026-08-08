@@ -15,26 +15,113 @@ body {
     height: 100vh;
 }
 
+
+/* =========================
+   LOGIN / SIGNUP
+========================= */
+
+.auth-container {
+    width: 380px;
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.auth-container h1 {
+    text-align: center;
+
+    margin-bottom: 10px;
+}
+
+.auth-container input {
+    padding: 13px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.auth-container input:focus {
+    border-color: #075e54;
+}
+
+.auth-container button {
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #075e54;
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.auth-container button:hover {
+    background: #064e47;
+}
+
+#authMessage {
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
 .chat-container {
     width: 400px;
     height: 600px;
 
     background: white;
+
     border-radius: 12px;
 
     overflow: hidden;
 
-    display: flex;
+    display: none;
+
     flex-direction: column;
 
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
+
+/* HEADER */
+
 .chat-header {
     background: #075e54;
+
     color: white;
 
-    padding: 18px;
+    padding: 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
 }
 
 .chat-header h2 {
@@ -43,8 +130,30 @@ body {
 
 .chat-header span {
     font-size: 13px;
+
     color: #d9fdd3;
 }
+
+#logoutButton {
+    background: #c62828;
+
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+#logoutButton:hover {
+    background: #a91f1f;
+}
+
+
+/* MESSAGES */
 
 .chat-messages {
     flex: 1;
@@ -70,13 +179,18 @@ body {
 
 .received {
     background: white;
-    align-self: flex-start;
+
+    margin-right: auto;
 }
 
 .sent {
     background: #d9fdd3;
+
     margin-left: auto;
 }
+
+
+/* INPUT */
 
 .chat-input {
     display: flex;
@@ -118,4 +232,24 @@ body {
 
 .chat-input button:hover {
     background: #064e47;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+
+    .chat-container {
+        width: 100%;
+        height: 100vh;
+
+        border-radius: 0;
+    }
+
+    .auth-container {
+        width: 90%;
+    }
+
 }
